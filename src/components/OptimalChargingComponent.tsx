@@ -40,29 +40,35 @@ function OptimalChargingComponent() {
   }
 
   return (
-    <form
-      onSubmit={getOptimalChargingWindow}
-      className="flex gap-4 items-center"
-    >
+    <div className="flex flex-col gap-4">
       {error && (
         <div className="text-red-500 mb-2 font-bold">
           Error: {error.message}
         </div>
       )}
-      <input
-        type="number"
-        placeholder="type hours (1-6)"
-        value={hours}
-        onChange={handleChange}
-        className="border p2 rounded w-64"
-        min="1"
-        max="6"
-      />
-      <button className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-        Get Optimal Charging Window (1-6 hours)
-      </button>
-      {optimalWindow && <OptimalChargingWindowTable data={optimalWindow} />}
-    </form>
+      <form
+        onSubmit={getOptimalChargingWindow}
+        className="flex gap-4 items-center"
+      >
+        <input
+          type="number"
+          placeholder="type hours (1-6)"
+          value={hours}
+          onChange={handleChange}
+          className="border p2 rounded w-64"
+          min="1"
+          max="6"
+        />
+        <button className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+          Get Optimal Charging Window (1-6 hours)
+        </button>
+      </form>
+      {optimalWindow && (
+        <div className="mt-2">
+          <OptimalChargingWindowTable data={optimalWindow} />
+        </div>
+      )}
+    </div>
   );
 }
 
