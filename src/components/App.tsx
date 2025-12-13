@@ -1,6 +1,5 @@
-// import { useState } from "react";
 import ForecastComponent from "./ForecastComponent";
-// import OptimalChargingComponent from "./OptimalChargingComponent";
+import OptimalChargingComponent from "./OptimalChargingComponent";
 
 function App() {
   return (
@@ -9,7 +8,7 @@ function App() {
         <h1>Energy Mix</h1>
       </header>
       <ForecastComponent />
-      {/* <OptimalChargingComponent /> */}
+      <OptimalChargingComponent />
     </div>
   );
 }
