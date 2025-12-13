@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import type { DailyEnergySummary } from "../types";
+import type { DailyEnergySummary } from "../utils/types";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 const COLORS = [
-  "#106bbcff",
-  "#23ac93ff",
-  "#FFBB28",
-  "#e4550dff",
-  "#4d49a2ff",
-  "#03bd4bff",
+  "#2a9d8f", // Hydro
+  "#862a9dff", // Other
+  "#606c38", // Biomass
+  "#e96a7fff", // Imports
+  "#96551fff", // Gas
+  "#e7b551ff", // Solar
+  "#191d20ff", // Coal
+  "#4361ee", // Nuclear
+  "#a8dadc", // Wind
 ];
 
 function ForecastComponent() {
