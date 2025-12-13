@@ -1,19 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import type { DailyEnergySummary } from "../utils/types";
+import type { DailyEnergySummary } from "../utils/backend-data-types";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-
-const COLORS = [
-  "#2a9d8f", // Hydro
-  "#862a9dff", // Other
-  "#606c38", // Biomass
-  "#e96a7fff", // Imports
-  "#96551fff", // Gas
-  "#e7b551ff", // Solar
-  "#191d20ff", // Coal
-  "#4361ee", // Nuclear
-  "#a8dadc", // Wind
-];
+import { getFuelColor } from "../utils/forecast-helpper";
 
 function ForecastComponent() {
   const [dailySummaries, setDailySummaries] = useState<DailyEnergySummary[]>(
@@ -34,6 +23,7 @@ function ForecastComponent() {
     return Object.keys(fuelMap).map((key) => ({
       name: key,
       value: fuelMap[key],
+      fill: getFuelColor(key),
     }));
   };
 
@@ -45,17 +35,17 @@ function ForecastComponent() {
         Forecast for the next 3 days:
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="flex flex-wrap justify-center gap-8">
         {dailySummaries.map((day, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col"
+            className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center w-full md:w-[350px]"
           >
             <h3 className="text-center font-bold text-xl mb-2 text-gray-700">
-              {day.date.substring(0, 10)}
+              Date: {day.date.substring(0, 10)}
             </h3>
 
-            <div className="text-center mb-4">
+            <div className="text-center mb-8">
               <span className="bg-green-100 text-green-800 text-sm font-bold px-3 py-1 rounded-full">
                 Clean Energy Percentage:{" "}
                 {day.cleanEnergyPercent ? day.cleanEnergyPercent.toFixed(1) : 0}
@@ -70,14 +60,14 @@ function ForecastComponent() {
                   dataKey="value"
                   cx="50%"
                   cy="50%"
-                  outerRadius={80}
-                  label={({ percent }: any) => `${(percent * 100).toFixed(0)}%`}
+                  outerRadius={60}
+                  label={({ percent }: any) => {
+                    if (percent * 100 < 1) return null;
+                    return `${(percent * 100).toFixed(0)}%`;
+                  }}
                 >
                   {prepareChartData(day.fuelSpec).map((entry, idx) => (
-                    <Cell
-                      key={`cell-${idx}`}
-                      fill={COLORS[idx % COLORS.length]}
-                    />
+                    <Cell key={`cell-${idx}`} fill={entry.fill} />
                   ))}
                 </Pie>
                 <Tooltip
