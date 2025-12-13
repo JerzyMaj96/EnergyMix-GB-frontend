@@ -1,7 +1,7 @@
 export interface DailyEnergySummary {
   date: string;
-  averageCleanEnergyPercent: number;
-  fuelPercentAverages: Record<string, number>;
+  cleanEnergyPercent: number;
+  fuelSpec: Record<string, number>;
 }
 
 export interface OptimalChargingWindow {
