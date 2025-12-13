@@ -39,7 +39,7 @@ function OptimalChargingComponent() {
     }
   }
 
-  return !optimalWindow ? (
+  return (
     <form
       onSubmit={getOptimalChargingWindow}
       className="flex gap-4 items-center"
@@ -61,9 +61,8 @@ function OptimalChargingComponent() {
       <button className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
         Get Optimal Charging Window (1-6 hours)
       </button>
+      {optimalWindow && <OptimalChargingWindowTable data={optimalWindow} />}
     </form>
-  ) : (
-    <OptimalChargingWindowTable data={optimalWindow} />
   );
 }
 
