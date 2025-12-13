@@ -21,7 +21,7 @@ function OptimalChargingComponent() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/optimal-charging-window?windowLength=${hours}`
+        `http://localhost:8080/energy-mix/optimal-charging-window?windowLength=${hours}`
       );
 
       if (!response.ok) {
@@ -40,7 +40,10 @@ function OptimalChargingComponent() {
   }
 
   return !optimalWindow ? (
-    <form onSubmit={getOptimalChargingWindow}>
+    <form
+      onSubmit={getOptimalChargingWindow}
+      className="flex gap-4 items-center"
+    >
       {error && (
         <div className="text-red-500 mb-2 font-bold">
           Error: {error.message}
@@ -51,12 +54,12 @@ function OptimalChargingComponent() {
         placeholder="type hours (1-6)"
         value={hours}
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="border p2 rounded w-64"
         min="1"
         max="6"
       />
       <button className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-        Get Optimal Charging Window
+        Get Optimal Charging Window (1-6 hours)
       </button>
     </form>
   ) : (
