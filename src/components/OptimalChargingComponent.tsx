@@ -4,8 +4,9 @@ import {
   type OptimalChargingWindow,
 } from "../utils/backend-data-types";
 import OptimalChargingWindowTable from "./OptimalChargingWindowTable";
+import type { OptimalWindowProps } from "../utils/table-helper";
 
-function OptimalChargingComponent() {
+function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
   const [hours, setHours] = useState<number | string>("");
   const [error, setError] = useState<Error | null>(null);
   const [optimalWindow, setOptimalWindow] =
@@ -16,8 +17,11 @@ function OptimalChargingComponent() {
     setHours(Number(event.target.value));
   }
 
+  const isBlocked = loading || !isForecastReady;
+
   async function getOptimalChargingWindow(event: React.FormEvent) {
     event.preventDefault();
+    if (isBlocked) return;
     setError(null);
     setOptimalWindow(null);
 
@@ -66,13 +70,20 @@ function OptimalChargingComponent() {
           className="border p2 rounded w-64"
           min="1"
           max="6"
-          disabled={loading}
+          disabled={isBlocked}
         />
         <button
-          disabled={loading}
+          disabled={isBlocked}
           className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
         >
-          {loading ? "Loading..." : "Get Optimal Charging Window (1-6 hours)"}
+          {loading ? (
+            "Loading..."
+          ) : (
+            <div>
+              Get Optimal Charging Window (1-6 hours)
+              <p>(for 2 days in advance )</p>
+            </div>
+          )}
         </button>
       </form>
       {optimalWindow && (

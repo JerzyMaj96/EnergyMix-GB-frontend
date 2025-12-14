@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import { baseUrl, type DailyEnergySummary } from "../utils/backend-data-types";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { getFuelColor } from "../utils/forecast-helpper";
+import { getFuelColor } from "../utils/forecast-helper";
+import type { ForecastProps } from "../utils/forecast-helper";
 
-function ForecastComponent() {
+function ForecastComponent({ onLoaded }: ForecastProps) {
   const [dailySummaries, setDailySummaries] = useState<DailyEnergySummary[]>(
     []
   );
@@ -32,11 +33,12 @@ function ForecastComponent() {
         }
       } finally {
         setLoading(false);
+        onLoaded();
       }
     };
 
     fetchThreeDayData();
-  }, []);
+  }, [onLoaded]);
 
   const prepareChartData = (fuelMap: Record<string, number>) => {
     if (!fuelMap) return [];

@@ -22,3 +22,7 @@ export const getFuelColor = (name: string): string => {
   if (key.includes("import")) return COLORS.imports;
   return COLORS.other;
 };
+
+export interface ForecastProps {
+  onLoaded: () => void;
+}

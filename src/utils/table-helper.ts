@@ -13,3 +13,7 @@ export const formatDateTime = (isoString: string) => {
     minute: "2-digit",
   });
 };
+
+export interface OptimalWindowProps {
+  isForecastReady: boolean;
+}
