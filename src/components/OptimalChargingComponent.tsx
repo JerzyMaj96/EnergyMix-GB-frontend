@@ -60,14 +60,14 @@ function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
       )}
       <form
         onSubmit={getOptimalChargingWindow}
-        className="flex gap-4 items-center"
+        className="flex flex-col gap-6 items-center w-full"
       >
         <input
           type="number"
           placeholder="type hours (1-6)"
           value={hours}
           onChange={handleChange}
-          className="border p2 rounded w-64"
+          className="border p-2 rounded-lg w-64 text-center shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
           min="1"
           max="6"
           disabled={isBlocked}
