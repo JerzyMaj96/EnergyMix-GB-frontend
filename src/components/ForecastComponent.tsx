@@ -64,7 +64,7 @@ function ForecastComponent({ onLoaded }: ForecastProps) {
 
   return (
     <div className="mb-12 max-w-7xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 pl-4 border-l-8 border-blue-600">
+      <h2 className="text-2xl font-bold mb-8 text-center text-white drop-shadow-md">
         Forecast for the next 3 days:
       </h2>
 
