@@ -40,11 +40,13 @@ function ForecastComponent() {
 
   const prepareChartData = (fuelMap: Record<string, number>) => {
     if (!fuelMap) return [];
-    return Object.keys(fuelMap).map((key) => ({
-      name: key,
-      value: fuelMap[key],
-      fill: getFuelColor(key),
-    }));
+    return Object.keys(fuelMap)
+      .filter((key) => fuelMap[key] >= 1)
+      .map((key) => ({
+        name: key,
+        value: fuelMap[key],
+        fill: getFuelColor(key),
+      }));
   };
 
   if (loading) return <div className="p-10 text-center">Loading...</div>;
