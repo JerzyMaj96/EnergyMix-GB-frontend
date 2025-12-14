@@ -81,7 +81,7 @@ function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
               <span className="font-bold text-lg">Calculating...</span>
             </div>
           ) : (
-            <div>
+            <div className="flex flex-col items-center leading-tight">
               <span className="font-bold text-lg">Find Best Charging Time</span>
               <span className="text-xs font-medium opacity-80 mt-1">
                 (Forecast for the next 2 days)
