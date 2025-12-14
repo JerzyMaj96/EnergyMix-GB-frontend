@@ -1,5 +1,8 @@
 import { useState } from "react";
-import type { OptimalChargingWindow } from "../utils/backend-data-types";
+import {
+  baseUrl,
+  type OptimalChargingWindow,
+} from "../utils/backend-data-types";
 import OptimalChargingWindowTable from "./OptimalChargingWindowTable";
 
 function OptimalChargingComponent() {
@@ -7,6 +10,7 @@ function OptimalChargingComponent() {
   const [error, setError] = useState<Error | null>(null);
   const [optimalWindow, setOptimalWindow] =
     useState<OptimalChargingWindow | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setHours(Number(event.target.value));
@@ -19,9 +23,11 @@ function OptimalChargingComponent() {
 
     if (!hours) return;
 
+    setLoading(true);
+
     try {
       const response = await fetch(
-        `http://localhost:8080/energy-mix/optimal-charging-window?windowLength=${hours}`
+        `${baseUrl}/energy-mix/optimal-charging-window?windowLength=${hours}`
       );
 
       if (!response.ok) {
@@ -36,6 +42,8 @@ function OptimalChargingComponent() {
       } else {
         setError(new Error("An unknown error occurred"));
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -58,9 +66,13 @@ function OptimalChargingComponent() {
           className="border p2 rounded w-64"
           min="1"
           max="6"
+          disabled={loading}
         />
-        <button className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-          Get Optimal Charging Window (1-6 hours)
+        <button
+          disabled={loading}
+          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        >
+          {loading ? "Loading..." : "Get Optimal Charging Window (1-6 hours)"}
         </button>
       </form>
       {optimalWindow && (

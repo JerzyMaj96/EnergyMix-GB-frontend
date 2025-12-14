@@ -9,3 +9,6 @@ export interface OptimalChargingWindow {
   endingDateTime: string;
   averageCleanEnergyPercent: number;
 }
+
+export const baseUrl =
+  import.meta.env.VITE_PUBLIC_API_URL || "http://localhost:8080";

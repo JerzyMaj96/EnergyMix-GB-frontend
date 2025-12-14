@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import type { DailyEnergySummary } from "../utils/backend-data-types";
+import { baseUrl, type DailyEnergySummary } from "../utils/backend-data-types";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { getFuelColor } from "../utils/forecast-helpper";
 
@@ -8,14 +8,34 @@ function ForecastComponent() {
   const [dailySummaries, setDailySummaries] = useState<DailyEnergySummary[]>(
     []
   );
+  const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetch("http://localhost:8080/energy-mix/three-days-summary")
-      .then((response) => response.json())
-      .then((data) => setDailySummaries(data))
-      .catch((error) => console.error("Error fetching the data", error))
-      .finally(() => setLoading(false));
+    const fetchThreeDayData = async () => {
+      try {
+        const response = await fetch(
+          `${baseUrl}/energy-mix/three-days-summary`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setDailySummaries(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error);
+        } else {
+          setError(new Error("An unknown error occurred"));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchThreeDayData();
   }, []);
 
   const prepareChartData = (fuelMap: Record<string, number>) => {
@@ -28,6 +48,15 @@ function ForecastComponent() {
   };
 
   if (loading) return <div className="p-10 text-center">Loading...</div>;
+
+  if (error) {
+    return (
+      <div className="p-10 text-center text-red-600 font-bold bg-red-50 rounded-lg mx-auto max-w-2xl mt-10">
+        <h3>Could not load forecast data.</h3>
+        <p className="text-sm font-normal text-red-500 mt-2">{error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mb-12 max-w-7xl mx-auto">
