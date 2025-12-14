@@ -6,7 +6,7 @@ function OptimalChargingWindowTable({ data }: Props) {
     <div className="w-full mt-4 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-extrabold text-gray-800">
-          Optimal Charging Window Table
+          Optimal Charging Hours
         </h2>
       </div>
       <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm">
