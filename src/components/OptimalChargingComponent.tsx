@@ -13,13 +13,13 @@ function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
     useState<OptimalChargingWindow | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHours(Number(event.target.value));
-  }
+  };
 
   const isBlocked = loading || !isForecastReady;
 
-  async function getOptimalChargingWindow(event: React.FormEvent) {
+  const getOptimalChargingWindow = async (event: React.FormEvent) => {
     event.preventDefault();
     if (isBlocked) return;
     setError(null);
@@ -49,7 +49,7 @@ function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col gap-4">
