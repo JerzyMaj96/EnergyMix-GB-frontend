@@ -2,8 +2,11 @@
 import { useEffect, useState } from "react";
 import { baseUrl, type DailyEnergySummary } from "../utils/backend-data-types";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { getFuelColor } from "../utils/forecast-helper";
-import type { ForecastProps } from "../utils/forecast-helper";
+import { prepareChartData } from "../utils/forecast-helper";
+
+export interface ForecastProps {
+  onLoaded: () => void;
+}
 
 function ForecastComponent({ onLoaded }: ForecastProps) {
   const [dailySummaries, setDailySummaries] = useState<DailyEnergySummary[]>(
@@ -39,17 +42,6 @@ function ForecastComponent({ onLoaded }: ForecastProps) {
 
     fetchThreeDayData();
   }, [onLoaded]);
-
-  const prepareChartData = (fuelMap: Record<string, number>) => {
-    if (!fuelMap) return [];
-    return Object.keys(fuelMap)
-      .filter((key) => fuelMap[key] >= 1)
-      .map((key) => ({
-        name: key,
-        value: fuelMap[key],
-        fill: getFuelColor(key),
-      }));
-  };
 
   if (loading) return <div className="p-10 text-center">Loading...</div>;
 

@@ -4,7 +4,9 @@ import {
   type OptimalChargingWindow,
 } from "../utils/backend-data-types";
 import OptimalChargingWindowTable from "./OptimalChargingWindowTable";
-import type { OptimalWindowProps } from "../utils/table-helper";
+interface OptimalWindowProps {
+  isForecastReady: boolean;
+}
 
 function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
   const [hours, setHours] = useState<number | string>("");

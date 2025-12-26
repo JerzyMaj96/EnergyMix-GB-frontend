@@ -1,5 +1,9 @@
-import type { Props } from "../utils/table-helper";
 import { formatDateTime } from "../utils/table-helper";
+import type { OptimalChargingWindow } from "../utils/backend-data-types";
+
+interface Props {
+  data: OptimalChargingWindow;
+}
 
 function OptimalChargingWindowTable({ data }: Props) {
   return (

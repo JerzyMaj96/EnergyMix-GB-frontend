@@ -1,9 +1,3 @@
-import type { OptimalChargingWindow } from "./backend-data-types";
-
-export interface Props {
-  data: OptimalChargingWindow;
-}
-
 export const formatDateTime = (isoString: string) => {
   return new Date(isoString).toLocaleString("en-GB", {
     day: "2-digit",
@@ -13,7 +7,3 @@ export const formatDateTime = (isoString: string) => {
     minute: "2-digit",
   });
 };
-
-export interface OptimalWindowProps {
-  isForecastReady: boolean;
-}

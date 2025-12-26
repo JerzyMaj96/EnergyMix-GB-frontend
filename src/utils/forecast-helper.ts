@@ -10,7 +10,7 @@ const COLORS: Record<string, string> = {
   wind: "#a8dadc",
 };
 
-export const getFuelColor = (name: string): string => {
+const getFuelColor = (name: string): string => {
   const key = name.toLowerCase();
   if (key.includes("hydro") || key.includes("water")) return COLORS.hydro;
   if (key.includes("solar")) return COLORS.solar;
@@ -23,6 +23,13 @@ export const getFuelColor = (name: string): string => {
   return COLORS.other;
 };
 
-export interface ForecastProps {
-  onLoaded: () => void;
-}
+export const prepareChartData = (fuelMap: Record<string, number>) => {
+  if (!fuelMap) return [];
+  return Object.keys(fuelMap)
+    .filter((key) => fuelMap[key] >= 1)
+    .map((key) => ({
+      name: key,
+      value: fuelMap[key],
+      fill: getFuelColor(key),
+    }));
+};
