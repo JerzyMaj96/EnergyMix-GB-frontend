@@ -4,13 +4,13 @@ import { baseUrl, type DailyEnergySummary } from "../utils/backend-data-types";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { prepareChartData } from "../utils/forecast-helper";
 
-export interface ForecastProps {
+interface ForecastProps {
   onLoaded: () => void;
 }
 
 function ForecastComponent({ onLoaded }: ForecastProps) {
   const [dailySummaries, setDailySummaries] = useState<DailyEnergySummary[]>(
-    []
+    [],
   );
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,7 +19,7 @@ function ForecastComponent({ onLoaded }: ForecastProps) {
     const fetchThreeDayData = async () => {
       try {
         const response = await fetch(
-          `${baseUrl}/energy-mix/three-days-summary`
+          `${baseUrl}/energy-mix/three-days-summary`,
         );
 
         if (!response.ok) {
