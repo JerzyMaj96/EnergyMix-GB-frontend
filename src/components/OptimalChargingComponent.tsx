@@ -16,7 +16,9 @@ function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setHours(Number(event.target.value));
+    const value = event.target.value;
+
+    setHours(value === "" ? "" : parseInt(value));
   };
 
   const isBlocked = loading || !isForecastReady;
@@ -33,7 +35,7 @@ function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
 
     try {
       const response = await fetch(
-        `${baseUrl}/energy-mix/optimal-charging-window?windowLength=${hours}`
+        `${baseUrl}/energy-mix/optimal-charging-window?windowLength=${hours}`,
       );
 
       if (!response.ok) {
