@@ -18,7 +18,16 @@ function OptimalChargingComponent({ isForecastReady }: OptimalWindowProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
-    setHours(value === "" ? "" : parseInt(value));
+    if (value === "") {
+      setHours("");
+      return;
+    }
+
+    const parsedValue = Number(value);
+
+    if (parsedValue >= 0 && parsedValue <= 6) {
+      setHours(parsedValue);
+    }
   };
 
   const isBlocked = loading || !isForecastReady;
