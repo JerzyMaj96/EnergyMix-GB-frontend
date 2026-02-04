@@ -1,7 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { baseUrl, type DailyEnergySummary } from "../utils/backend-data-types";
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  type PieLabelRenderProps,
+} from "recharts";
 import { prepareChartData } from "../utils/forecast-helper";
 
 interface ForecastProps {
@@ -86,7 +92,7 @@ function ForecastComponent({ onLoaded }: ForecastProps) {
                   cx="50%"
                   cy="50%"
                   outerRadius={60}
-                  label={({ percent }: any) => {
+                  label={({ percent = 0 }: PieLabelRenderProps) => {
                     if (percent * 100 < 1) return null;
                     return `${(percent * 100).toFixed(0)}%`;
                   }}
